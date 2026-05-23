@@ -1,0 +1,18 @@
+# Секретные данные — никогда не заливать!
+.env
+.env.example
+
+# Виртуальное окружение
+venv/
+
+# База данных
+*.db
+*.sqlite3
+
+# Python кэш
+__pycache__/
+*.py[cod]
+*.pyo
+
+# macOS
+.DS_Store
