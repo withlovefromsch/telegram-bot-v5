@@ -1,4 +1,10 @@
 """Точка входа бота «Курсы на миллион 💸💵»."""
+import os
+import sys
+
+# Добавляем корень проекта в sys.path, чтобы при запуске из сервиса
+# импорты вида `from data.courses import ...` работали корректно.
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import asyncio
 import logging
 
