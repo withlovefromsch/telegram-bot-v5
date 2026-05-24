@@ -24,6 +24,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+DB_PATH: str = os.getenv('DATA_DIR', '/app/data') + '/bot_database.db'
+
 
 async def set_bot_commands(bot: Bot) -> None:
     commands = [
