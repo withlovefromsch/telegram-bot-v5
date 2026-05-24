@@ -11,6 +11,25 @@ sys.path.insert(0, project_root)
 if '/app' not in sys.path:
     sys.path.insert(0, '/app')
 
+    # Диагностика: показываем sys.path и содержимое /app в логах контейнера
+    try:
+        print("=== DIAG: bot startup ===")
+        print("DIAG: project_root=", project_root)
+        print("DIAG: cwd=", os.getcwd())
+        print("DIAG: PYTHONPATH=", os.environ.get('PYTHONPATH'))
+        print("DIAG: DATA_DIR=", os.environ.get('DATA_DIR'))
+        print("DIAG: sys.path=", sys.path)
+        try:
+            print("DIAG: list /app=", sorted(os.listdir('/app')))
+        except Exception as e:
+            print("DIAG: cannot list /app:", e)
+        try:
+            print("DIAG: list project_root=", sorted(os.listdir(project_root)))
+        except Exception as e:
+            print("DIAG: cannot list project_root:", e)
+        print("=== DIAG end ===")
+    except Exception:
+        pass
 import asyncio
 import logging
 
