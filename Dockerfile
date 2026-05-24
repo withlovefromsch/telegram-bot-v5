@@ -77,5 +77,7 @@ RUN chown -R $(id -u):$(id -g) /app/data 2>/dev/null || chown -R 1000:1000 /app/
 # Гарантируем, что Python найдёт локальные пакеты (data/, handlers/, и т.д.)
 ENV PYTHONPATH=/app
 
-# Определяем точку входа — прямой запуск bot.py с установленным PYTHONPATH
-CMD ["python", "/app/bot.py"]
+# Определяем точку входа — запускаем startup wrapper, который сохранит диагностические логи
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+CMD ["sh", "/app/start.sh"]
