@@ -1,6 +1,7 @@
 FROM python:3.11-slim
 
-WORKDIR /app
+# Use /srv/app for application files to avoid host mounting over /app
+WORKDIR /srv/app
 
 COPY requirements.txt .
 # Очищаем BOM и невидимые символы из requirements.txt
@@ -75,9 +76,9 @@ RUN mkdir -p /app/data && chmod 777 /app/data
 RUN chown -R $(id -u):$(id -g) /app/data 2>/dev/null || chown -R 1000:1000 /app/data || true
 
 # Гарантируем, что Python найдёт локальные пакеты (data/, handlers/, и т.д.)
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/srv/app
 
 # Определяем точку входа — запускаем startup wrapper, который сохранит диагностические логи
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
-CMD ["sh", "/app/start.sh"]
+COPY start.sh /srv/app/start.sh
+RUN chmod +x /srv/app/start.sh
+CMD ["sh", "/srv/app/start.sh"]

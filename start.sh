@@ -13,10 +13,12 @@ echo "ENV:" >> "$LOG"
 env >> "$LOG"
 echo "ls /app:" >> "$LOG"
 ls -la /app >> "$LOG" 2>&1 || echo "cannot list /app" >> "$LOG"
+echo "ls /srv/app:" >> "$LOG"
+ls -la "/srv/app" >> "$LOG" 2>&1 || echo "cannot list /srv/app" >> "$LOG"
 echo "ls project root:" >> "$LOG"
 ls -la "$(dirname "$0")" >> "$LOG" 2>&1 || echo "cannot list project root" >> "$LOG"
 echo "Print sys.path via python:" >> "$LOG"
-python - <<'PY'
+python - <<'PY' >> "$LOG"
 import sys, os
 try:
     print('\n'.join(sys.path))
@@ -26,4 +28,4 @@ PY
 echo "=== END STARTUP DIAG ===" >> "$LOG"
 
 echo "Starting bot..." >> "$LOG"
-exec python /app/bot.py
+exec python /srv/app/bot.py
