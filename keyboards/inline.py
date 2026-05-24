@@ -3,7 +3,9 @@ from __future__ import annotations
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from data.courses import COURSES
+from data_loader import get_courses
+
+COURSES = get_courses()
 
 
 # ─────────────────────────── Курсы ────────────────────────────────────────

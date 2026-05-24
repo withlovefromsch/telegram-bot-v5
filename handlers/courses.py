@@ -5,32 +5,10 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 
-try:
-    from data.courses import COURSES
-except ModuleNotFoundError:
-    # Fallback: try loading the module directly from common locations inside the container
-    import importlib.util
-    import os
-
-    COURSES = {}
-    candidates = [
-        "/srv/app/data/courses.py",
-        "/app/data/courses.py",
-        os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "courses.py"),
-    ]
-    for path in candidates:
-        try:
-            if path and os.path.exists(path):
-                spec = importlib.util.spec_from_file_location("data.courses", path)
-                mod = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(mod)
-                COURSES = getattr(mod, "COURSES", {})
-                break
-        except Exception:
-            continue
-    if not COURSES:
-        raise
+from data_loader import get_courses
 from database import db
+
+COURSES = get_courses()
 from keyboards.inline import (
     courses_list_kb,
     course_detail_kb,
