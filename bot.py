@@ -4,7 +4,13 @@ import sys
 
 # Добавляем корень проекта в sys.path, чтобы при запуске из сервиса
 # импорты вида `from data.courses import ...` работали корректно.
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+project_root = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, project_root)
+
+# Также добавляем /app (на сервере может запускаться из другой директории)
+if '/app' not in sys.path:
+    sys.path.insert(0, '/app')
+
 import asyncio
 import logging
 
